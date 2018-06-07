@@ -1,0 +1,117 @@
+<html>
+
+<head>
+  <META HTTP-EQUIV="content-type" CONTENT="text/html; charset=utf-8">
+
+  <style>
+    .unselectable {
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      inline: none;
+    }
+  </style>
+
+  <link rel="stylesheet" href="./bootstrap.min.css">
+  <script src="./jquery.min.js">
+  </script>
+  <script src="./bootstrap.min.js">
+  </script>
+
+  <link rel="stylesheet" href="./pure-release-1.0.0/pure-min.css">
+</head>
+
+<body onload="init()">
+
+
+
+
+
+  <!-- zu integrieren -->
+  <div class="pure-g">
+
+
+
+
+    <div class="pure-u-5-24">
+      <p id="pos" class="unselectable"></p>
+
+
+      <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Fraktal
+      <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          <li><a href="#" onclick="setFraktal(0)">Mandelbrot Klassisch</a></li>
+          <li><a href="#" onclick="setFraktal(1)">Auge normal</a></li>
+          <li><a href="#" onclick="setFraktal(2)">Auge Zwillingsverfahren</a></li>
+        </ul>
+      </div>
+
+
+
+
+
+      <form class="pure-form">
+        <fieldset>
+          <div class="pure-control-group">
+            <label for="x_min">x_min</label>
+            <input id="x_min" type="text" placeholder="">
+          </div>
+
+          <div class="pure-control-group">
+            <label for="x_max">x_max</label>
+            <input id="x_max" type="text" placeholder="">
+          </div>
+
+          <div class="pure-control-group">
+            <label for="y_min">y_min</label>
+            <input id="y_min" type="text" placeholder="">
+          </div>
+
+          <div class="pure-control-group">
+            <label for="y_max">y_max</label>
+            <input id="y_max" type="text" placeholder="">
+          </div>
+
+        </fieldset>
+      </form>
+
+      <button type="button" class="btn btn-success" id="btnGO" onclick="go()">Zeichnen</button>
+
+
+
+
+
+    </div>
+
+    <div class="pure-u-19-24">
+
+
+
+      <div style="position: relative;">
+        <canvas id="myCanvas" style="position: absolute; left: 0; top: 100; z-index: 0;"></canvas>
+        <canvas id="layer2" style="position: absolute; left: 0; top: 100; z-index: 1;"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <script src="defineVars.js"></script>
+  <script src="defineFunction.js"></script>
+  <script src="events.js"></script>
+  <script src="init.js"></script>
+</body>
+
+</html>
