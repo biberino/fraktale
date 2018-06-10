@@ -19,6 +19,8 @@ var max_betrag_2 = max_betrag * max_betrag;
 
 var koppl = 0.5;
 
+
+
 var canvas = document.getElementById("myCanvas");
 var layer = document.getElementById("layer2");
 canvas.width = 1200;
@@ -26,6 +28,23 @@ canvas.height = 800;
 
 layer.width = canvas.width;
 layer.height = canvas.height;
+
+
+/*** variablen fürs Buddhabrot (BETA) */
+
+var pixel_array = [];
+
+for (var i = 0; i < canvas.width; i++) {
+    pixel_array[i] = [];
+    for (var j = 0; j < canvas.height; j++) {
+        pixel_array[i][j] = 0
+    }
+}
+
+var max_iter_buddha = 100
+var w_durch_x_sp;
+var h_durch_y_sp;
+/** */
 
 var width = canvas.width;
 var height = canvas.height;

@@ -42,11 +42,18 @@
 
       <div class="dropdown">
         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Fraktal
-      <span class="caret"></span></button>
+          <span class="caret"></span>
+        </button>
         <ul class="dropdown-menu">
-          <li><a href="#" onclick="setFraktal(0)">Mandelbrot Klassisch</a></li>
-          <li><a href="#" onclick="setFraktal(1)">Auge normal</a></li>
-          <li><a href="#" onclick="setFraktal(2)">Auge Zwillingsverfahren</a></li>
+          <li>
+            <a href="#" onclick="setFraktal(0)">Mandelbrot Klassisch</a>
+          </li>
+          <li>
+            <a href="#" onclick="setFraktal(1)">Auge normal</a>
+          </li>
+          <li>
+            <a href="#" onclick="setFraktal(2)">Auge Zwillingsverfahren</a>
+          </li>
         </ul>
       </div>
 
@@ -107,9 +114,10 @@
 
 
 
-
+  <script src="rnd_lib.js"></script>
   <script src="defineVars.js"></script>
   <script src="defineFunction.js"></script>
+  <script src="buddha.js"></script>
   <script src="events.js"></script>
   <script src="init.js"></script>
 </body>
