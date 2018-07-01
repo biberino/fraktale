@@ -24,14 +24,14 @@ function CtoRGB(ca, cb) {
       //skaliere k zwischen 0 255
       //TODO hier farbe wählen
       var farbe = (k / max_iter) * 255;
-      return {r: farbe, g: farbe, b: farbe};
+      return { r: farbe, g: farbe, b: farbe };
     }
   }
 
   var betrag = Math.sqrt(betragHochZwei(za, zb));
   var farbe = betrag / max_betrag * 255;
 
-  return {r: 0, g: 0, b: farbe};
+  return { r: 0, g: 0, b: farbe };
 
 }
 
@@ -50,16 +50,71 @@ function MandelbrotFunction(ca, cb) {
       //skaliere k zwischen 0 255
       //TODO hier farbe wählen
       var farbe = (k / max_iter) * 255;
-      return {r: farbe, g: farbe, b: farbe};
+      return { r: farbe, g: farbe, b: farbe };
     }
   }
 
   var betrag = Math.sqrt(betragHochZwei(za, zb));
   var farbe = betrag / max_betrag * 255;
 
-  return {r: 0, g: 0, b: farbe};
+  return { r: 0, g: 0, b: farbe };
 
 }
+
+function MandelbrotFunctionWithOffset(ca, cb) {
+  var offset = komplexHochKomplex(ca, cb, ca, cb)
+  var za = offset.a;
+  var zb = offset.b;
+  var buffer;
+
+  for (var k = 0; k < max_iter; k++) {
+
+    buffer = mandelbrot(za, zb, ca, cb);
+    za = buffer.a;
+    zb = buffer.b;
+
+    if (betragHochZwei(za, zb) > max_betrag_2) {
+      //skaliere k zwischen 0 255
+      //TODO hier farbe wählen
+      var farbe = (k / max_iter) * 255;
+      return { r: farbe, g: farbe, b: farbe };
+    }
+  }
+
+  var betrag = Math.sqrt(betragHochZwei(za, zb));
+  var farbe = betrag / max_betrag * 255;
+
+  return { r: 0, g: 0, b: farbe };
+
+}
+
+function ZellenFunction(ca, cb) {
+  var za = 0.0;
+  var zb = 0.0;
+  var buffer;
+
+  for (var k = 0; k < max_iter; k++) {
+
+    buffer = zellen(za, zb, ca, cb);
+    za = buffer.a;
+    zb = buffer.b;
+
+    if (betragHochZwei(za, zb) > max_betrag_2) {
+      //skaliere k zwischen 0 255
+      //TODO hier farbe wählen
+      var farbe = (k / max_iter) * 255;
+      return { r: farbe, g: farbe, b: farbe };
+    }
+  }
+
+  var betrag = Math.sqrt(betragHochZwei(za, zb));
+  var farbe = betrag / max_betrag * 255;
+
+  return { r: 0, g: 0, b: farbe };
+
+}
+
+
 function AugeFunction(ca, cb) {
   var za = 0.0;
   var zb = 0.0;
@@ -75,14 +130,67 @@ function AugeFunction(ca, cb) {
       //skaliere k zwischen 0 255
       //TODO hier farbe wählen
       var farbe = (k / max_iter) * 255;
-      return {r: farbe, g: farbe, b: farbe};
+      return { r: farbe, g: farbe, b: farbe };
     }
   }
 
   var betrag = Math.sqrt(betragHochZwei(za, zb));
   var farbe = betrag / max_betrag * 255;
 
-  return {r: 0, g: 0, b: farbe};
+  return { r: 0, g: 0, b: farbe };
+
+}
+
+function AugeFunctionWithOffset(ca, cb) {
+  //var offset = komplexHochKomplex(ca, cb, ca, cb)
+  var za = cb;
+  var zb = cb;
+  var buffer;
+
+  for (var k = 0; k < max_iter; k++) {
+
+    buffer = mandelbrotKonjugiert(za, zb, ca, cb);
+    za = buffer.a;
+    zb = buffer.b;
+
+    if (betragHochZwei(za, zb) > max_betrag_2) {
+      //skaliere k zwischen 0 255
+      //TODO hier farbe wählen
+      var farbe = (k / max_iter) * 255;
+      return { r: farbe, g: farbe, b: farbe };
+    }
+  }
+
+  var betrag = Math.sqrt(betragHochZwei(za, zb));
+  var farbe = betrag / max_betrag * 255;
+
+  return { r: 0, g: 0, b: farbe };
+
+}
+
+function TempelOfVoidFunction(ca, cb) {
+  var za = 0.0;
+  var zb = 0.0;
+  var buffer;
+
+  for (var k = 0; k < max_iter; k++) {
+
+    buffer = templeOfVoid(za, zb, ca, cb);
+    za = buffer.a;
+    zb = buffer.b;
+
+    if (betragHochZwei(za, zb) > max_betrag_2) {
+      //skaliere k zwischen 0 255
+      //TODO hier farbe wählen
+      var farbe = (k / max_iter) * 255;
+      return { r: farbe, g: farbe, b: farbe };
+    }
+  }
+
+  var betrag = Math.sqrt(betragHochZwei(za, zb));
+  var farbe = betrag / max_betrag * 255;
+
+  return { r: 0, g: 0, b: farbe };
 
 }
 
@@ -123,7 +231,7 @@ function CtoRGBZwilling(ca, cb) {
         return farbenTabelle[k];
       }
       var farbe = (k / max_iter) * 255;
-      return {r: farbe, g: farbe, b: farbe};
+      return { r: farbe, g: farbe, b: farbe };
     }
 
     if (isNaN(za) || isNaN(zb) || isNaN(zza) || isNaN(zzb)) {
@@ -135,7 +243,7 @@ function CtoRGBZwilling(ca, cb) {
         return farbenTabelle[k];
       }
       var farbe = (k / max_iter) * 255;
-      return {r: farbe, g: farbe, b: farbe};
+      return { r: farbe, g: farbe, b: farbe };
     }
 
   }
@@ -157,7 +265,7 @@ function CtoRGBZwilling(ca, cb) {
   var farbe1 = betrag1 / max_betrag * 255;
   var farbe2 = betrag2 / max_betrag * 255;
   //var naheNull = 0;
-  return {r: farbe1, g: farbe2, b: farbe3};
+  return { r: farbe1, g: farbe2, b: farbe3 };
 
 }
 
@@ -196,7 +304,7 @@ function AugeZwillingFunction(ca, cb) {
         return farbenTabelle[k];
       }
       var farbe = (k / max_iter) * 255;
-      return {r: farbe, g: farbe, b: farbe};
+      return { r: farbe, g: farbe, b: farbe };
     }
 
     if (isNaN(za) || isNaN(zb) || isNaN(zza) || isNaN(zzb)) {
@@ -208,7 +316,7 @@ function AugeZwillingFunction(ca, cb) {
         return farbenTabelle[k];
       }
       var farbe = (k / max_iter) * 255;
-      return {r: farbe, g: farbe, b: farbe};
+      return { r: farbe, g: farbe, b: farbe };
     }
 
   }
@@ -230,7 +338,85 @@ function AugeZwillingFunction(ca, cb) {
   var farbe1 = betrag1 / max_betrag * 255;
   var farbe2 = betrag2 / max_betrag * 255;
   //var naheNull = 0;
-  return {r: farbe1, g: farbe2, b: farbe3};
+  return { r: farbe1, g: farbe2, b: farbe3 };
+
+}
+
+function AugeZwillingFunctionWithOffset(ca, cb) {
+
+  //var offset = komplexHochKomplex(ca,cb,1,3)
+  //offset.a = (ca * ca - cb * cb)
+  //offset.b = (2 * ca * cb)
+
+  var za = ca;
+  var zb = cb;
+
+  var zza = ca;
+  var zzb = cb;
+
+  var buffer;
+  /**
+    za = 0.0; //realAnteil
+    zb = 0.0; //imaginärAnteil
+    zza = 0.0;
+    zzb = 0.0;
+    **/
+
+  for (var k = 0; k < max_iter; k++) {
+
+    buffer = augeZwilling(za, zb, zza, zzb, ca, cb);
+    za = buffer.a1;
+    zb = buffer.b1;
+    zza = buffer.a2;
+    zzb = buffer.b2;
+
+    if (betragHochZwei(za, zb) > max_betrag_2 && betragHochZwei(zza, zzb) > max_betrag_2) {
+      //skaliere k zwischen 0 255
+      //TODO hier farbe wählen
+      if (!(hashSet[k] === true)) {
+        console.log(`Iteration nach ${k} abgeborchen`);
+        hashSet[k] = true;
+      }
+
+      if (farbenTabelle.hasOwnProperty(k)) {
+        return farbenTabelle[k];
+      }
+      var farbe = (k / max_iter) * 255;
+      return { r: farbe, g: farbe, b: farbe };
+    }
+
+    if (isNaN(za) || isNaN(zb) || isNaN(zza) || isNaN(zzb)) {
+      if (!(hashSet[k] === true)) {
+        console.log(`Iteration nach ${k} abgeborchen`);
+        hashSet[k] = true;
+      }
+      if (farbenTabelle.hasOwnProperty(k)) {
+        return farbenTabelle[k];
+      }
+      var farbe = (k / max_iter) * 255;
+      return { r: farbe, g: farbe, b: farbe };
+    }
+
+  }
+
+  var betrag1 = Math.sqrt(betragHochZwei(za, zb));
+  var betrag2 = Math.sqrt(betragHochZwei(zza, zzb));
+
+  if (betrag1 > max_betrag) {
+    var farbe3 = 255;
+  }
+
+  if (betrag2 > max_betrag) {
+    var farbe3 = 255;
+  }
+
+  if (betrag1 < max_betrag && betrag2 < max_betrag) {
+    var farbe3 = 0;
+  }
+  var farbe1 = betrag1 / max_betrag * 255;
+  var farbe2 = betrag2 / max_betrag * 255;
+  //var naheNull = 0;
+  return { r: farbe1, g: farbe2, b: farbe3 };
 
 }
 
@@ -238,7 +424,7 @@ function julia(za, zb, ca, cb) {
 
   var resultA = ((za * za) - (zb * zb)) + 1;
   var resultB = (2.0 * za * zb);
-  return {a: resultA, b: resultB}
+  return { a: resultA, b: resultB }
 
 }
 
@@ -246,7 +432,7 @@ function zellen(za, zb) {
 
   var resultA = ((za * za) - (zb * zb)) + 1;
   var resultB = (2.0 * za * zb) + 1;
-  return {a: resultA, b: resultB}
+  return { a: resultA, b: resultB }
 
 }
 
@@ -258,7 +444,7 @@ function zellenZw(za, zb, x, y) {
   var resultA2 = ((x * x) - (y * y)) + 1 - (koppl * za);
   var resultB2 = (2.0 * y * x) + 1 - (koppl * zb);
 
-  return {a1: resultA, b1: resultB, a2: resultA2, b2: resultB2}
+  return { a1: resultA, b1: resultB, a2: resultA2, b2: resultB2 }
 
 }
 
@@ -275,20 +461,20 @@ function templeOfVoid(za, zb, ca, cb) {
   resultA += ca;
   resultB += cb;
 
-  return {a: resultA, b: resultB}
+  return { a: resultA, b: resultB }
 
 }
 
 function mandelbrot(za, zb, ca, cb) {
   var resultA = ((za * za) - (zb * zb)) + ca;
   var resultB = (2.0 * za * zb) + cb;
-  return {a: resultA, b: resultB}
+  return { a: resultA, b: resultB }
 }
 
 function mandelbrotKonjugiert(za, zb, ca, cb) {
   var resultA = (za * za + zb * zb) + ca;
   var resultB = cb;
-  return {a: resultA, b: resultB}
+  return { a: resultA, b: resultB }
 }
 
 function augeZwilling(x1, y1, x2, y2, cx, cy) {
@@ -296,7 +482,7 @@ function augeZwilling(x1, y1, x2, y2, cx, cy) {
   var y1n = cy + koppl * y2
   var x2n = x2 * x2 + y2 * y2 + cx - koppl * x1
   var y2n = cy - koppl * y1
-  return {a1: x1n, b1: y1n, a2: x2n, b2: y2n}
+  return { a1: x1n, b1: y1n, a2: x2n, b2: y2n }
 }
 
 //sieht noch komisch aus, hab ich was verpeilt?
@@ -315,7 +501,7 @@ function vierpolAntenne(za, zb, ca, cb) {
   var resultA = ((zA * nA) + (zB * nB)) / (nenner);
   var resultB = ((zB * nA) - (zA * nB)) / (nenner);
 
-  return {a: resultA, b: resultB}
+  return { a: resultA, b: resultB }
 }
 
 /** Z^Z +C
@@ -324,7 +510,7 @@ function simpelPotenz(za, zb, ca, cb) {
   const buffer = komplexHochKomplex(za, zb, za, zb);
   const resultA = buffer.a;
   const resultB = buffer.b;
-  return {a: resultA, b: resultB}
+  return { a: resultA, b: resultB }
 }
 
 /** Z^(Z* -1) +C
@@ -336,7 +522,7 @@ function konjugiertKomplexePotenz(za, zb, ca, cb) {
   const resultA = buffer.a - 1;
   const resultB = buffer.b;
 
-  return {a: resultA, b: resultB}
+  return { a: resultA, b: resultB }
 }
 
 function konjugiertKomplexePotenzZw(x1, y1, x2, y2, cx, cy) {
@@ -352,7 +538,7 @@ function konjugiertKomplexePotenzZw(x1, y1, x2, y2, cx, cy) {
   const resultAn = buffern.a + cx + (koppl * x1);
   const resultBn = buffern.b + cy + (koppl * y1);
 
-  return {a1: resultA, b1: resultB, a2: resultAn, b2: resultBn}
+  return { a1: resultA, b1: resultB, a2: resultAn, b2: resultBn }
 }
 
 function engel(x1, y1, x2, y2, cx, cy) {
@@ -368,7 +554,7 @@ function engel(x1, y1, x2, y2, cx, cy) {
   const resultAn = buffern.a - 1 - koppl * x1;
   const resultBn = buffern.b + koppl * y1;
 
-  return {a1: resultA, b1: resultB, a2: resultAn, b2: resultBn}
+  return { a1: resultA, b1: resultB, a2: resultAn, b2: resultBn }
 }
 
 /** complex hoch complex
@@ -431,7 +617,7 @@ function komplexHochKomplex(a, b, x, y) {
     }
     **/
 
-  return {a: realTeil, b: imTeil}
+  return { a: realTeil, b: imTeil }
 }
 
 function komplexHochKomplexAl(a, b, x, y) {
@@ -491,7 +677,7 @@ function komplexHochKomplexAl(a, b, x, y) {
     }
     **/
 
-  return {a: realTeil, b: imTeil}
+  return { a: realTeil, b: imTeil }
 }
 /**
 function komplexHochKomplex(a, b, x, y) {

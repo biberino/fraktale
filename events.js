@@ -1,7 +1,7 @@
 /**
 Hier werden Events (clicks, etc..) definiert
 **/
-layer.addEventListener('mousemove', function(evt) {
+layer.addEventListener('mousemove', function (evt) {
   var mousePos = getMousePos(layer, evt);
   var koord = XYzuRealIm(mousePos.x, mousePos.y);
   var message = 'Real: ' + koord.real + '<br> Imaginär: ' + koord.im;
@@ -27,7 +27,7 @@ layer.addEventListener('mousemove', function(evt) {
 
 }, false);
 
-layer.addEventListener('mouseup', function(evt) {
+layer.addEventListener('mouseup', function (evt) {
   var mousePos = getMousePos(layer, evt);
   var startKoord = XYzuRealIm(zoomRect.startPosX, zoomRect.startPosY);
   var zielKoord = XYzuRealIm(mousePos.x, mousePos.y);
@@ -53,7 +53,20 @@ layer.addEventListener('mouseup', function(evt) {
 
 }, false);
 
-layer.addEventListener('mousedown', function(evt) {
+function zoom_out() {
+  x_min *= 2;
+  x_max *= 2;
+  y_min *= 2;
+  y_max *= 2;
+
+  x_sp = x_max - x_min;
+  y_sp = y_max - y_min;
+
+  iteration();
+  updateRange();
+}
+
+layer.addEventListener('mousedown', function (evt) {
   var mousePos = getMousePos(layer, evt);
   zoomRect.startPosX = mousePos.x;
   zoomRect.startPosY = mousePos.y;
@@ -64,7 +77,7 @@ layer.addEventListener('mousedown', function(evt) {
 
 //dropdrown aktualisieren
 
-$(".dropdown-menu li a").click(function() {
+$(".dropdown-menu li a").click(function () {
   $(".btn:first-child").text($(this).text());
   $(".btn:first-child").val($(this).text());
 
@@ -80,6 +93,21 @@ function setFraktal(id) {
       break;
     case 2:
       fraktalFunction = AugeZwillingFunction;
+      break;
+    case 3:
+      fraktalFunction = TempelOfVoidFunction;
+      break;
+    case 4:
+      fraktalFunction = ZellenFunction;
+      break;
+    case 5:
+      fraktalFunction = MandelbrotFunctionWithOffset;
+      break;
+    case 6:
+      fraktalFunction = AugeFunctionWithOffset;
+      break;
+    case 7:
+      fraktalFunction = AugeZwillingFunctionWithOffset;
       break;
     default:
       fraktalFunction = MandelbrotFunction;
