@@ -5,14 +5,13 @@ function init() {
 
   //iteration();
   setFraktal(0);
-  updateRange();
+  updateUI();
 }
 
 /** wrapperfunction, wird vom zeichnen button aufgerufen **/
 function go() {
-
-  getRangeFromForm();
-  updateRange();
+  getUserInput();
+  updateUI();
   //spannweite updaten
   x_sp = x_max - x_min;
   y_sp = y_max - y_min;

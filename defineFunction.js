@@ -61,6 +61,37 @@ function MandelbrotFunction(ca, cb) {
 
 }
 
+function HausSteichenPlusFunction(ca, cb) {
+  var za = ca;
+  var zb = cb;
+  var buffer;
+
+  for (var k = 0; k < max_iter; k++) {
+
+    buffer = haus_steichen_plus(za, zb, gen_1, gen_2);
+    za = buffer.a;
+    zb = buffer.b;
+
+    if (betragHochZwei(za, zb) > max_betrag_2) {
+      //skaliere k zwischen 0 255
+      //TODO hier farbe wählen
+      var farbe = (k / max_iter) * 255;
+      return { r: farbe, g: farbe, b: farbe };
+      console.log("Haus streichen nach " + k + " Iteration zu groß");
+
+    }
+  }
+
+  //console.log(za + "  " + zb);
+
+
+  var betrag = Math.sqrt(betragHochZwei(za, zb));
+  var farbe = betrag / max_betrag * 255;
+
+  return { r: 0, g: 0, b: farbe };
+
+}
+
 function MandelbrotFunctionWithOffset(ca, cb) {
   var offset = komplexHochKomplex(ca, cb, ca, cb)
   var za = offset.a;
@@ -299,10 +330,11 @@ function AugeZwillingFunction(ca, cb) {
         console.log(`Iteration nach ${k} abgeborchen`);
         hashSet[k] = true;
       }
-
+      
       if (farbenTabelle.hasOwnProperty(k)) {
         return farbenTabelle[k];
       }
+      
       var farbe = (k / max_iter) * 255;
       return { r: farbe, g: farbe, b: farbe };
     }
@@ -312,9 +344,11 @@ function AugeZwillingFunction(ca, cb) {
         console.log(`Iteration nach ${k} abgeborchen`);
         hashSet[k] = true;
       }
+      /**
       if (farbenTabelle.hasOwnProperty(k)) {
         return farbenTabelle[k];
       }
+      **/
       var farbe = (k / max_iter) * 255;
       return { r: farbe, g: farbe, b: farbe };
     }
@@ -420,6 +454,92 @@ function AugeZwillingFunctionWithOffset(ca, cb) {
 
 }
 
+function HausStreichenZwilling(ca, cb) {
+
+  //var offset = komplexHochKomplex(ca,cb,1,3)
+  //offset.a = (ca * ca - cb * cb)
+  //offset.b = (2 * ca * cb)
+
+  var numbers = new Set()
+
+  var za = ca;
+  var zb = cb;
+
+  var zza = ca;
+  var zzb = cb;
+
+  var buffer;
+  /**
+    za = 0.0; //realAnteil
+    zb = 0.0; //imaginärAnteil
+    zza = 0.0;
+    zzb = 0.0;
+    **/
+
+  for (var k = 0; k < max_iter; k++) {
+
+    
+
+    buffer = haus_streichen_plus_zwilling(za, zb, zza, zzb, gen_1, gen_2);
+    za = buffer.a1;
+    zb = buffer.b1;
+    zza = buffer.a2;
+    zzb = buffer.b2;
+
+    if (betragHochZwei(za, zb) > max_betrag_2 && betragHochZwei(zza, zzb) > max_betrag_2) {
+      //skaliere k zwischen 0 255
+      //TODO hier farbe wählen
+      if (!(hashSet[k] === true)) {
+        console.log(`Iteration nach ${k} abgeborchen`);
+        hashSet[k] = true;
+      }
+
+      if (farbenTabelle.hasOwnProperty(k)) {
+        return farbenTabelle[k];
+      }
+      var farbe = (k / max_iter) * 255;
+      return { r: farbe, g: farbe, b: farbe };
+    }
+
+    if (isNaN(za) || isNaN(zb) || isNaN(zza) || isNaN(zzb)) {
+      if (!(hashSet[k] === true)) {
+        console.log(`Iteration nach ${k} abgeborchen`);
+        hashSet[k] = true;
+      }
+      /**
+      if (farbenTabelle.hasOwnProperty(k)) {
+        return farbenTabelle[k];
+      }
+      **/
+      var farbe = (k / max_iter) * 255;
+      return { r: farbe, g: farbe, b: farbe };
+    }
+
+  }
+
+  var betrag1 = Math.sqrt(betragHochZwei(za, zb));
+  var betrag2 = Math.sqrt(betragHochZwei(zza, zzb));
+
+  if (betrag1 > max_betrag) {
+    var farbe3 = 255;
+  }
+
+  if (betrag2 > max_betrag) {
+    var farbe3 = 255;
+  }
+
+  if (betrag1 < max_betrag && betrag2 < max_betrag) {
+    var farbe3 = 0;
+  }
+  var farbe1 = betrag1 / max_betrag * 255;
+  var farbe2 = betrag2 / max_betrag * 255;
+  //var naheNull = 0;
+  return { r: farbe1, g: farbe2, b: farbe3 };
+
+}
+
+
+
 function julia(za, zb, ca, cb) {
 
   var resultA = ((za * za) - (zb * zb)) + 1;
@@ -485,6 +605,20 @@ function augeZwilling(x1, y1, x2, y2, cx, cy) {
   return { a1: x1n, b1: y1n, a2: x2n, b2: y2n }
 }
 
+function haus_streichen_plus_zwilling(x1, y1, x2, y2, cx, cy) {
+
+  var z1 = haus_steichen_plus(x1, y1, cx, cy)
+  var z2 = haus_steichen_plus(x2, y2, cx, cy)
+
+  z1.a = z1.a - (koppl * z2.a)
+  z1.b = z1.b - (koppl * z2.b)
+
+  z2.a = z2.a - (koppl * z1.a)
+  z2.b = z2.b - (koppl * z1.b)
+
+  return { a1: z1.a, b1: z1.b, a2: z2.a, b2: z2.b }
+}
+
 //sieht noch komisch aus, hab ich was verpeilt?
 function vierpolAntenne(za, zb, ca, cb) {
   var zA = za + ca;
@@ -500,6 +634,27 @@ function vierpolAntenne(za, zb, ca, cb) {
   var nenner = (nA * nA) + (nB * nB);
   var resultA = ((zA * nA) + (zB * nB)) / (nenner);
   var resultB = ((zB * nA) - (zA * nB)) / (nenner);
+
+  return { a: resultA, b: resultB }
+}
+
+
+// (z*c) / (z+c)
+function haus_steichen_plus(za, zb, ca, cb) {
+  //z*c
+  var resultAZaehler = ((za * ca) - (zb * cb));
+  var resultBZaehler = (zb * ca) + (za * cb);
+
+  //z+c
+  var resultANenner = za + ca;
+  var resultBNenner = zb + cb;
+
+  // zaehler / nenner
+  var speedup = (resultANenner * resultANenner) + (resultBNenner * resultBNenner)
+
+  var resultA = ((resultAZaehler * resultANenner) + (resultBZaehler * resultBNenner)) / (speedup)
+
+  var resultB = ((resultBZaehler * resultANenner) - (resultAZaehler * resultBNenner)) / (speedup)
 
   return { a: resultA, b: resultB }
 }
@@ -714,11 +869,19 @@ function point(x, y, r, g, b) {
 function writeMessage(message) {
   document.getElementById('pos').innerHTML = message;
 }
-function updateRange() {
+function updateUI() {
   $("#x_min").attr("placeholder", `${x_min}`);
   $("#x_max").attr("placeholder", `${x_max}`);
   $("#y_min").attr("placeholder", `${y_min}`);
   $("#y_max").attr("placeholder", `${y_max}`);
+
+  $("#gen_1").attr("placeholder", `${gen_1}`);
+  $("#gen_2").attr("placeholder", `${gen_2}`);
+
+  $("#max_iter").attr("placeholder", `${max_iter}`);
+  $("#max_betrag").attr("placeholder", `${max_betrag}`);
+
+  $("#koppl").attr("placeholder", `${koppl}`);
 
 }
 
@@ -755,7 +918,7 @@ function draw() {
 Ließt Nutzereingaben aus und setzt, falls notwenig,
 die Grenzen des Koordinatensystems
 **/
-function getRangeFromForm() {
+function getUserInput() {
   var x_min_input = parseFloat($("#x_min").val());
   var x_max_input = parseFloat($("#x_max").val());
   var y_min_input = parseFloat($("#y_min").val());
@@ -777,10 +940,43 @@ function getRangeFromForm() {
     y_max = y_max_input;
   }
 
+  var gen_1_input = parseFloat($("#gen_1").val());
+  var gen_2_input = parseFloat($("#gen_2").val());
+
+  if (!isNaN(gen_1_input)) {
+    gen_1 = gen_1_input;
+  }
+
+  if (!isNaN(gen_2_input)) {
+    gen_2 = gen_2_input;
+  }
+
+  var max_iter_input = parseFloat($("#max_iter").val());
+  var max_betrag_input = parseFloat($("#max_betrag").val());
+
+  if (!isNaN(max_iter_input)) {
+    max_iter = max_iter_input;
+  }
+
+  if (!isNaN(max_betrag_input)) {
+    max_betrag = max_betrag_input;
+  }
+
+  var koppl_input = parseFloat($("#koppl").val());
+
+  if (!isNaN(koppl_input)) {
+    koppl = koppl_input;
+  }
+
   //felder leeren
 
   $("#x_min").val("");
   $("#x_max").val("");
   $("#y_min").val("");
   $("#y_max").val("");
+  $("#gen_1").val("");
+  $("#gen_2").val("");
+  $("#max_iter").val("");
+  $("#max_betrag").val("");
+  $("#koppl").val("");
 }

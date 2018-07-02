@@ -12,12 +12,17 @@ var y_sp = y_max - y_min;
 
 //var schrittWeite = 0.001;
 
-var max_iter = 200;
+var max_iter = 300;
 
 var max_betrag = 2;
 var max_betrag_2 = max_betrag * max_betrag;
 
 var koppl = 0.5;
+
+
+//generischer Input für diverses
+var gen_1 = 0.0;
+var gen_2 = 0.0;
 
 
 

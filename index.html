@@ -22,6 +22,39 @@
   </script>
 
   <link rel="stylesheet" href="./pure-release-1.0.0/pure-min.css">
+
+  <style>
+    .loader {
+      border: 16px solid #f3f3f3;
+      border-radius: 50%;
+      border-top: 16px solid #3498db;
+      width: 120px;
+      height: 120px;
+      -webkit-animation: spin 2s linear infinite;
+      /* Safari */
+      animation: spin 2s linear infinite;
+    }
+
+    /* Safari */
+
+    @-webkit-keyframes spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+      }
+      100% {
+        -webkit-transform: rotate(360deg);
+      }
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
 </head>
 
 <body onload="init()">
@@ -69,6 +102,12 @@
           <li>
             <a href="#" onclick="setFraktal(7)">Auge Zwilling offset</a>
           </li>
+          <li>
+            <a href="#" onclick="setFraktal(8)">Haus streichen/Widerstand Parallell</a>
+          </li>
+          <li>
+            <a href="#" onclick="setFraktal(9)">Haus streichen/Widerstand Parallell Zw</a>
+          </li>
         </ul>
       </div>
 
@@ -96,16 +135,52 @@
           <div class="pure-control-group">
             <label for="y_max">y_max</label>
             <input id="y_max" type="text" placeholder="">
+
+            <button type="button" class="btn btn-success" id="gtnResetRange" onclick="reset_range()">reset Zoom</button>
+
           </div>
 
         </fieldset>
-      </form>
 
-      <button type="button" class="btn btn-success" id="btnGO" onclick="go()">Zeichnen</button>
-      <button type="button" class="btn btn-success" id="btnZoomOut" onclick="zoom_out()">Rauszoomen</button>
+        <form class="pure-form">
+          <fieldset>
+            <div class="pure-control-group">
+              <label for="gen_1">gen_1</label>
+              <input id="gen_1" type="text" placeholder="">
+            </div>
+
+            <div class="pure-control-group">
+              <label for="gen_2">gen_2</label>
+              <input id="gen_2" type="text" placeholder="">
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <div class="pure-control-group">
+              <label for="max_iter">max_iter</label>
+              <input id="max_iter" type="text" placeholder="">
+            </div>
+
+            <div class="pure-control-group">
+              <label for="max_betrag">max_betrag</label>
+              <input id="max_betrag" type="text" placeholder="">
+            </div>
+
+            <div class="pure-control-group">
+              <label for="koppl">koppl</label>
+              <input id="koppl" type="text" placeholder="">
+            </div>
 
 
+          </fieldset>
+        </form>
 
+        <button type="button" class="btn btn-success" id="btnGO" onclick="go()">Zeichnen</button>
+        <button type="button" class="btn btn-success" id="btnZoomOut" onclick="zoom_out()">Rauszoomen</button>
+
+        <br>
+        <br>
+        <div id="spinner" class=""></div>
 
 
     </div>

@@ -47,7 +47,7 @@ layer.addEventListener('mouseup', function (evt) {
     y_sp = y_max - y_min;
 
     iteration();
-    updateRange();
+    updateUI();
 
   }
 
@@ -63,7 +63,20 @@ function zoom_out() {
   y_sp = y_max - y_min;
 
   iteration();
-  updateRange();
+  updateUI();
+}
+
+function reset_range() {
+  x_min = -2;
+  x_max = 1;
+  y_min = -1;
+  y_max = 1;
+
+  x_sp = x_max - x_min;
+  y_sp = y_max - y_min;
+
+  iteration();
+  updateUI();
 }
 
 layer.addEventListener('mousedown', function (evt) {
@@ -82,6 +95,15 @@ $(".dropdown-menu li a").click(function () {
   $(".btn:first-child").val($(this).text());
 
 });
+
+function set_spinner(active) {
+
+  if (active) {
+    $("#spinner").attr("class", "loader")
+  } else {
+    $("#spinner").attr("class", "")
+  }
+}
 
 function setFraktal(id) {
   switch (id) {
@@ -108,6 +130,12 @@ function setFraktal(id) {
       break;
     case 7:
       fraktalFunction = AugeZwillingFunctionWithOffset;
+      break;
+    case 8:
+      fraktalFunction = HausSteichenPlusFunction;
+      break;
+    case 9:
+      fraktalFunction = HausStreichenZwilling;
       break;
     default:
       fraktalFunction = MandelbrotFunction;
