@@ -132,10 +132,22 @@ function setFraktal(id) {
       fraktalFunction = AugeZwillingFunctionWithOffset;
       break;
     case 8:
-      fraktalFunction = HausSteichenPlusFunction;
+      fraktalFunction = HausStreichenPlusFunction;
       break;
     case 9:
       fraktalFunction = HausStreichenZwilling;
+      break;
+    case 10:
+      fraktalFunction = HausStreichenQuadratPlusFunction;
+      break;
+    case 11:
+      fraktalFunction = HausStreichenQuadratZwilling;
+      break;
+    case 12:
+      fraktalFunction = HausStreichenQuadratPlusFunctionKonj;
+      break;
+    case 13:
+      fraktalFunction = HausStreichenQuadratZwillingKonj;
       break;
     default:
       fraktalFunction = MandelbrotFunction;

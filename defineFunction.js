@@ -61,14 +61,14 @@ function MandelbrotFunction(ca, cb) {
 
 }
 
-function HausSteichenPlusFunction(ca, cb) {
+function HausStreichenPlusFunction(ca, cb) {
   var za = ca;
   var zb = cb;
   var buffer;
 
   for (var k = 0; k < max_iter; k++) {
 
-    buffer = haus_steichen_plus(za, zb, gen_1, gen_2);
+    buffer = haus_streichen_plus(za, zb, gen_1, gen_2);
     za = buffer.a;
     zb = buffer.b;
 
@@ -89,6 +89,84 @@ function HausSteichenPlusFunction(ca, cb) {
   var farbe = betrag / max_betrag * 255;
 
   return { r: 0, g: 0, b: farbe };
+
+}
+
+
+
+function HausStreichenQuadratPlusFunction(ca, cb) {
+  var za = ca;
+  var zb = cb;
+  var buffer;
+
+  for (var k = 0; k < max_iter; k++) {
+
+    buffer = haus_streichen_quadrat_plus(za, zb, gen_1, gen_2);
+    za = buffer.a;
+    zb = buffer.b;
+
+    if (betragHochZwei(za, zb) > max_betrag_2) {
+      if (!(hashSet[k] === true)) {
+        console.log(`Iteration nach ${k} abgeborchen`);
+        hashSet[k] = true;
+      }
+      //skaliere k zwischen 0 255
+      //TODO hier farbe wählen
+      var farbe = (k / max_iter) * 255;
+      //console.log("Haus streichen nach " + k + " Iteration zu groß");
+      return { r: farbe, g: farbe, b: farbe };
+
+
+    }
+  }
+
+  //console.log(za + "  " + zb);
+
+
+  var betrag = Math.sqrt(betragHochZwei(za, zb));
+
+  var farbe = betrag / max_betrag * 255;
+
+  //die fallen wohl alle auf null
+  return { r: 255 - farbe, g: 0, b: farbe };
+
+}
+
+function HausStreichenQuadratPlusFunctionKonj(ca, cb) {
+  var za = ca;
+  var zb = cb;
+  var buffer;
+
+  for (var k = 0; k < max_iter; k++) {
+
+    buffer = haus_streichen_quadrat_plus_konj(za, zb, gen_1, gen_2);
+    za = buffer.a;
+    zb = buffer.b;
+
+    if (betragHochZwei(za, zb) > max_betrag_2) {
+      if (!(hashSet[k] === true)) {
+        console.log(`Iteration nach ${k} abgeborchen`);
+        hashSet[k] = true;
+      }
+      //skaliere k zwischen 0 255
+      //TODO hier farbe wählen
+      var farbe = (k / max_iter) * 255;
+      //console.log("Haus streichen nach " + k + " Iteration zu groß");
+      return { r: farbe, g: farbe, b: farbe };
+
+
+    }
+  }
+
+  //console.log(za + "  " + zb);
+
+
+  var betrag = Math.sqrt(betragHochZwei(za, zb));
+
+  var farbe = betrag / max_betrag * 255;
+
+  //die fallen wohl alle auf null
+  return { r: 255 - farbe, g: 0, b: farbe };
 
 }
 
@@ -330,11 +408,11 @@ function AugeZwillingFunction(ca, cb) {
         console.log(`Iteration nach ${k} abgeborchen`);
         hashSet[k] = true;
       }
-      
+
       if (farbenTabelle.hasOwnProperty(k)) {
         return farbenTabelle[k];
       }
-      
+
       var farbe = (k / max_iter) * 255;
       return { r: farbe, g: farbe, b: farbe };
     }
@@ -478,9 +556,177 @@ function HausStreichenZwilling(ca, cb) {
 
   for (var k = 0; k < max_iter; k++) {
 
-    
+
 
     buffer = haus_streichen_plus_zwilling(za, zb, zza, zzb, gen_1, gen_2);
+    za = buffer.a1;
+    zb = buffer.b1;
+    zza = buffer.a2;
+    zzb = buffer.b2;
+
+    if (betragHochZwei(za, zb) > max_betrag_2 && betragHochZwei(zza, zzb) > max_betrag_2) {
+      //skaliere k zwischen 0 255
+      //TODO hier farbe wählen
+      if (!(hashSet[k] === true)) {
+        console.log(`Iteration nach ${k} abgeborchen`);
+        hashSet[k] = true;
+      }
+
+      if (farbenTabelle.hasOwnProperty(k)) {
+        return farbenTabelle[k];
+      }
+      var farbe = (k / max_iter) * 255;
+      return { r: farbe, g: farbe, b: farbe };
+    }
+
+    if (isNaN(za) || isNaN(zb) || isNaN(zza) || isNaN(zzb)) {
+      if (!(hashSet[k] === true)) {
+        console.log(`Iteration nach ${k} abgeborchen`);
+        hashSet[k] = true;
+      }
+      /**
+      if (farbenTabelle.hasOwnProperty(k)) {
+        return farbenTabelle[k];
+      }
+      **/
+      var farbe = (k / max_iter) * 255;
+      return { r: farbe, g: farbe, b: farbe };
+    }
+
+  }
+
+  var betrag1 = Math.sqrt(betragHochZwei(za, zb));
+  var betrag2 = Math.sqrt(betragHochZwei(zza, zzb));
+
+  if (betrag1 > max_betrag) {
+    var farbe3 = 255;
+  }
+
+  if (betrag2 > max_betrag) {
+    var farbe3 = 255;
+  }
+
+  if (betrag1 < max_betrag && betrag2 < max_betrag) {
+    var farbe3 = 0;
+  }
+  var farbe1 = betrag1 / max_betrag * 255;
+  var farbe2 = betrag2 / max_betrag * 255;
+  //var naheNull = 0;
+  return { r: farbe1, g: farbe2, b: farbe3 };
+
+}
+
+function HausStreichenQuadratZwilling(ca, cb) {
+
+  //var offset = komplexHochKomplex(ca,cb,1,3)
+  //offset.a = (ca * ca - cb * cb)
+  //offset.b = (2 * ca * cb)
+
+  var numbers = new Set()
+
+  var za = ca;
+  var zb = cb;
+
+  var zza = ca;
+  var zzb = cb;
+
+  var buffer;
+  /**
+    za = 0.0; //realAnteil
+    zb = 0.0; //imaginärAnteil
+    zza = 0.0;
+    zzb = 0.0;
+    **/
+
+  for (var k = 0; k < max_iter; k++) {
+
+
+
+    buffer = haus_streichen_quadrat_plus_zwilling(za, zb, zza, zzb, gen_1, gen_2);
+    za = buffer.a1;
+    zb = buffer.b1;
+    zza = buffer.a2;
+    zzb = buffer.b2;
+
+    if (betragHochZwei(za, zb) > max_betrag_2 && betragHochZwei(zza, zzb) > max_betrag_2) {
+      //skaliere k zwischen 0 255
+      //TODO hier farbe wählen
+      if (!(hashSet[k] === true)) {
+        console.log(`Iteration nach ${k} abgeborchen`);
+        hashSet[k] = true;
+      }
+
+      if (farbenTabelle.hasOwnProperty(k)) {
+        return farbenTabelle[k];
+      }
+      var farbe = (k / max_iter) * 255;
+      return { r: farbe, g: farbe, b: farbe };
+    }
+
+    if (isNaN(za) || isNaN(zb) || isNaN(zza) || isNaN(zzb)) {
+      if (!(hashSet[k] === true)) {
+        console.log(`Iteration nach ${k} abgeborchen`);
+        hashSet[k] = true;
+      }
+      /**
+      if (farbenTabelle.hasOwnProperty(k)) {
+        return farbenTabelle[k];
+      }
+      **/
+      var farbe = (k / max_iter) * 255;
+      return { r: farbe, g: farbe, b: farbe };
+    }
+
+  }
+
+  var betrag1 = Math.sqrt(betragHochZwei(za, zb));
+  var betrag2 = Math.sqrt(betragHochZwei(zza, zzb));
+
+  if (betrag1 > max_betrag) {
+    var farbe3 = 255;
+  }
+
+  if (betrag2 > max_betrag) {
+    var farbe3 = 255;
+  }
+
+  if (betrag1 < max_betrag && betrag2 < max_betrag) {
+    var farbe3 = 0;
+  }
+  var farbe1 = betrag1 / max_betrag * 255;
+  var farbe2 = betrag2 / max_betrag * 255;
+  //var naheNull = 0;
+  return { r: farbe1, g: farbe2, b: farbe3 };
+
+}
+
+function HausStreichenQuadratZwillingKonj(ca, cb) {
+
+  //var offset = komplexHochKomplex(ca,cb,1,3)
+  //offset.a = (ca * ca - cb * cb)
+  //offset.b = (2 * ca * cb)
+
+  var numbers = new Set()
+
+  var za = ca;
+  var zb = cb;
+
+  var zza = ca;
+  var zzb = cb;
+
+  var buffer;
+  /**
+    za = 0.0; //realAnteil
+    zb = 0.0; //imaginärAnteil
+    zza = 0.0;
+    zzb = 0.0;
+    **/
+
+  for (var k = 0; k < max_iter; k++) {
+
+
+
+    buffer = haus_streichen_quadrat_plus_zwilling_konj(za, zb, zza, zzb, gen_1, gen_2);
     za = buffer.a1;
     zb = buffer.b1;
     zza = buffer.a2;
@@ -607,8 +853,36 @@ function augeZwilling(x1, y1, x2, y2, cx, cy) {
 
 function haus_streichen_plus_zwilling(x1, y1, x2, y2, cx, cy) {
 
-  var z1 = haus_steichen_plus(x1, y1, cx, cy)
-  var z2 = haus_steichen_plus(x2, y2, cx, cy)
+  var z1 = haus_streichen_plus(x1, y1, cx, cy)
+  var z2 = haus_streichen_plus(x2, y2, cx, cy)
+
+  z1.a = z1.a - (koppl * z2.a)
+  z1.b = z1.b - (koppl * z2.b)
+
+  z2.a = z2.a - (koppl * z1.a)
+  z2.b = z2.b - (koppl * z1.b)
+
+  return { a1: z1.a, b1: z1.b, a2: z2.a, b2: z2.b }
+}
+
+function haus_streichen_quadrat_plus_zwilling(x1, y1, x2, y2, cx, cy) {
+
+  var z1 = haus_streichen_quadrat_plus(x1, y1, cx, cy)
+  var z2 = haus_streichen_quadrat_plus(x2, y2, cx, cy)
+
+  z1.a = z1.a - (koppl * z2.a)
+  z1.b = z1.b - (koppl * z2.b)
+
+  z2.a = z2.a - (koppl * z1.a)
+  z2.b = z2.b - (koppl * z1.b)
+
+  return { a1: z1.a, b1: z1.b, a2: z2.a, b2: z2.b }
+}
+
+function haus_streichen_quadrat_plus_zwilling_konj(x1, y1, x2, y2, cx, cy) {
+
+  var z1 = haus_streichen_quadrat_plus_konj(x1, y1, cx, cy)
+  var z2 = haus_streichen_quadrat_plus_konj(x2, y2, cx, cy)
 
   z1.a = z1.a - (koppl * z2.a)
   z1.b = z1.b - (koppl * z2.b)
@@ -640,7 +914,7 @@ function vierpolAntenne(za, zb, ca, cb) {
 
 
 // (z*c) / (z+c)
-function haus_steichen_plus(za, zb, ca, cb) {
+function haus_streichen_plus(za, zb, ca, cb) {
   //z*c
   var resultAZaehler = ((za * ca) - (zb * cb));
   var resultBZaehler = (zb * ca) + (za * cb);
@@ -648,6 +922,58 @@ function haus_steichen_plus(za, zb, ca, cb) {
   //z+c
   var resultANenner = za + ca;
   var resultBNenner = zb + cb;
+
+  // zaehler / nenner
+  var speedup = (resultANenner * resultANenner) + (resultBNenner * resultBNenner)
+
+  var resultA = ((resultAZaehler * resultANenner) + (resultBZaehler * resultBNenner)) / (speedup)
+
+  var resultB = ((resultBZaehler * resultANenner) - (resultAZaehler * resultBNenner)) / (speedup)
+
+  return { a: resultA, b: resultB }
+}
+
+//(z^2 * c) / (z^2 + c)
+function haus_streichen_quadrat_plus(za, zb, ca, cb) {
+
+  //z*z
+  var zzA = (za * za) - (zb * zb)
+  var zzB = 2 * za * zb
+
+
+  //z^2*c
+  var resultAZaehler = ((zzA * ca) - (zzB * cb));
+  var resultBZaehler = (zzB * ca) + (zzA * cb);
+
+  //z^2+c
+  var resultANenner = zzA + ca;
+  var resultBNenner = zzB + cb;
+
+  // zaehler / nenner
+  var speedup = (resultANenner * resultANenner) + (resultBNenner * resultBNenner)
+
+  var resultA = ((resultAZaehler * resultANenner) + (resultBZaehler * resultBNenner)) / (speedup)
+
+  var resultB = ((resultBZaehler * resultANenner) - (resultAZaehler * resultBNenner)) / (speedup)
+
+  return { a: resultA, b: resultB }
+}
+
+//(z*(*z) * c) / (z*(*z) + c)
+function haus_streichen_quadrat_plus_konj(za, zb, ca, cb) {
+
+  //z*z
+  var zzA = (za * za) + (zb * zb)
+  var zzB = 0
+
+
+  //z^2*c
+  var resultAZaehler = ((zzA * ca) - (zzB * cb));
+  var resultBZaehler = (zzB * ca) + (zzA * cb);
+
+  //z^2+c
+  var resultANenner = zzA + ca;
+  var resultBNenner = zzB + cb;
 
   // zaehler / nenner
   var speedup = (resultANenner * resultANenner) + (resultBNenner * resultBNenner)
