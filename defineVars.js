@@ -72,6 +72,7 @@ var zoomRect = {
 }
 
 var fraktalFunction;
+var iterationFunction;
 
 //hashset für verschiedene aufgaben
 var hashSet = {};

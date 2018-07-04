@@ -108,49 +108,60 @@ function set_spinner(active) {
 function setFraktal(id) {
   switch (id) {
     case 0:
-      fraktalFunction = MandelbrotFunction;
+      fraktalFunction = mandelbrot
+      iterationFunction = normal_iteration
       break;
     case 1:
-      fraktalFunction = AugeFunction;
+      fraktalFunction = mandelbrotKonjugiert;
+      iterationFunction = normal_iteration
       break;
     case 2:
-      fraktalFunction = AugeZwillingFunction;
+      fraktalFunction = mandelbrotKonjugiert;
+      iterationFunction = normal_iteration_zwilling
       break;
     case 3:
-      fraktalFunction = TempelOfVoidFunction;
+      fraktalFunction = templeOfVoid;
+      iterationFunction = normal_iteration
       break;
     case 4:
-      fraktalFunction = ZellenFunction;
-      break;
-    case 5:
-      fraktalFunction = MandelbrotFunctionWithOffset;
-      break;
-    case 6:
-      fraktalFunction = AugeFunctionWithOffset;
-      break;
-    case 7:
-      fraktalFunction = AugeZwillingFunctionWithOffset;
+      fraktalFunction = zellen;
+      iterationFunction = normal_iteration
       break;
     case 8:
-      fraktalFunction = HausStreichenPlusFunction;
+      fraktalFunction = kondensator_1;
+      iterationFunction = julia_iteration
       break;
     case 9:
-      fraktalFunction = HausStreichenZwilling;
+      fraktalFunction = kondensator_1;
+      iterationFunction = julia_iteration_zwilling
       break;
     case 10:
-      fraktalFunction = HausStreichenQuadratPlusFunction;
+      fraktalFunction = kondensator_2;
+      iterationFunction = julia_iteration
       break;
     case 11:
-      fraktalFunction = HausStreichenQuadratZwilling;
+      fraktalFunction = kondensator_2;
+      iterationFunction = julia_iteration_zwilling
       break;
     case 12:
-      fraktalFunction = HausStreichenQuadratPlusFunctionKonj;
+      fraktalFunction = kondensator_3;
+      iterationFunction = julia_iteration
       break;
     case 13:
-      fraktalFunction = HausStreichenQuadratZwillingKonj;
+      fraktalFunction = kondensator_3;
+      iterationFunction = julia_iteration_zwilling
+      break;
+    case 14:
+      fraktalFunction = kondensator_4;
+      iterationFunction = julia_iteration;
+      break;
+    case 15:
+      fraktalFunction = kondensator_4;
+      iterationFunction = julia_iteration_zwilling;
       break;
     default:
-      fraktalFunction = MandelbrotFunction;
+      fraktalFunction = mandelbrot
+      iterationFunction = normal_iteration
 
   }
 }

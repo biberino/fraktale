@@ -79,46 +79,43 @@
         </button>
         <ul class="dropdown-menu">
           <li>
-            <a href="#" onclick="setFraktal(0)">Mandelbrot Klassisch</a>
+            <a href="#" onclick="setFraktal(0)">z*z +c, normal</a>
           </li>
           <li>
-            <a href="#" onclick="setFraktal(1)">Auge normal</a>
+            <a href="#" onclick="setFraktal(1)">z* (*z) +c, normal</a>
           </li>
           <li>
-            <a href="#" onclick="setFraktal(2)">Auge Zwillingsverfahren</a>
+            <a href="#" onclick="setFraktal(2)">z* (*z) +c, zwilling</a>
           </li>
           <li>
-            <a href="#" onclick="setFraktal(3)">Tempel of Void</a>
+            <a href="#" onclick="setFraktal(3)">Tempel of Void, normal</a>
           </li>
           <li>
-            <a href="#" onclick="setFraktal(4)">Zellen</a>
+            <a href="#" onclick="setFraktal(4)">Zellen, normal</a>
           </li>
           <li>
-            <a href="#" onclick="setFraktal(5)">Mandelbrot offset</a>
+            <a href="#" onclick="setFraktal(8)">(z*c) / (z+c), julia</a>
           </li>
           <li>
-            <a href="#" onclick="setFraktal(6)">Auge offset</a>
+            <a href="#" onclick="setFraktal(9)">(z*c) / (z+c), julia, zwilling</a>
           </li>
           <li>
-            <a href="#" onclick="setFraktal(7)">Auge Zwilling offset</a>
+            <a href="#" onclick="setFraktal(10)">(z*z*c) / (z*z+c), julia</a>
           </li>
           <li>
-            <a href="#" onclick="setFraktal(8)">Widerstand Parallell</a>
+            <a href="#" onclick="setFraktal(11)">(z*z*c) / (z*z+c), julia, zwilling</a>
           </li>
           <li>
-            <a href="#" onclick="setFraktal(9)">Widerstand Parallell Zw</a>
+            <a href="#" onclick="setFraktal(12)">((*z)*(*z)*c) / ((*z)*(*z)+c), julia</a>
           </li>
           <li>
-            <a href="#" onclick="setFraktal(10)">Widerstand Parallell Quadrat</a>
+            <a href="#" onclick="setFraktal(13)">((*z)*(*z)*c) / ((*z)*(*z)+c), julia,zwilling</a>
           </li>
           <li>
-            <a href="#" onclick="setFraktal(11)">Widerstand Parallell Quadrat Zw</a>
+            <a href="#" onclick="setFraktal(14)">(Z * c) / (*Z + c), julia</a>
           </li>
           <li>
-            <a href="#" onclick="setFraktal(12)">Widerstand Parallell Quadrat Konj</a>
-          </li>
-          <li>
-            <a href="#" onclick="setFraktal(13)">Widerstand Parallell Quadrat Konj Zw</a>
+            <a href="#" onclick="setFraktal(15)">(Z * c) / (*Z + c),julia Zwilling</a>
           </li>
         </ul>
       </div>
@@ -219,6 +216,7 @@
 
   <script src="rnd_lib.js"></script>
   <script src="defineVars.js"></script>
+  <script src="defineIteration.js"></script>
   <script src="defineFunction.js"></script>
   <script src="buddha.js"></script>
   <script src="events.js"></script>

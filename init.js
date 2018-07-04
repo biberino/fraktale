@@ -33,7 +33,7 @@ function iteration() {
 
       //buffer = CtoRGB(ca, cb);
       //buffer = CtoRGBZwilling(ca, cb);
-      buffer = fraktalFunction(ca, cb);
+      buffer = iterationFunction(ca, cb);
       point(x, y, buffer.r, buffer.g, buffer.b);
 
     }
